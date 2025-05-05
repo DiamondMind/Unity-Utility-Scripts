@@ -7,9 +7,34 @@ namespace DiamondMind.Prototypes.Tools
     [RequireComponent(typeof(Collider))]
     public class DrawColliderDebugShape : MonoBehaviour
     {
+        [Header("---------- Default Settings ----------")]
         public bool drawAsWire;
         public float transparency = 0.5f;
         public Color gizmoColor = Color.red;
+
+        [Header("---------- Trigger Settings ----------")]
+        [Tooltip("Select which layers can trigger the color change")]
+        public LayerMask triggerLayers;
+        public Color triggeredColor = Color.green;
+
+        bool isTriggered;
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (((1 << other.gameObject.layer) & triggerLayers) != 0)
+            {
+                isTriggered = true;
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (((1 << other.gameObject.layer) & triggerLayers) != 0)
+            {
+                isTriggered = false;
+            }
+        }
+
 
         private void OnDrawGizmos()
         {
@@ -17,7 +42,20 @@ namespace DiamondMind.Prototypes.Tools
 
             if (collider != null)
             {
+                Color currentColor = isTriggered ? triggeredColor : gizmoColor;
+
                 if (drawAsWire)
+                {
+                    Gizmos.color = currentColor;
+                }
+                else
+                {
+                    Color fullColor = currentColor;
+                    fullColor.a = transparency;
+                    Gizmos.color = fullColor;
+                }
+
+                /*if (drawAsWire)
                 {
                     Gizmos.color = gizmoColor;
                 }
@@ -26,7 +64,7 @@ namespace DiamondMind.Prototypes.Tools
                     Color fullColor = gizmoColor;
                     fullColor.a = transparency;
                     Gizmos.color = fullColor;
-                }
+                }*/
 
                 if (collider is SphereCollider)
                 {
@@ -50,6 +88,7 @@ namespace DiamondMind.Prototypes.Tools
                 }
             }
         }
+
 
         private void DrawSphereGizmo(SphereCollider sphereCollider)
         {
@@ -178,5 +217,6 @@ namespace DiamondMind.Prototypes.Tools
             Gizmos.color = transparentColor;
             Gizmos.DrawCube(position, size);
         }
+
     }
 }
