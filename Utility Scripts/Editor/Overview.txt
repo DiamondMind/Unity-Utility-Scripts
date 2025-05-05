@@ -1,0 +1,2 @@
+A Unity Editor window for exporting a custom Unity package.
+This tool creates hierarchical tree views for both the "Assets" and "ProjectSettings" folders, letting users selectively choose which files to include. It also offers options to include the package manifest and any asset dependencies.

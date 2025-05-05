@@ -51,7 +51,7 @@ namespace DiamondMind.Prototypes.Generic.Health
             shieldStrength = maxShieldStrength;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (canRecoverHealth && !isDead && currentHealth < maxHealth)
             {
@@ -63,7 +63,7 @@ namespace DiamondMind.Prototypes.Generic.Health
         {
             if (recoveringHealth)
             {
-                currentHealth += healthRecovery * Time.fixedDeltaTime;
+                currentHealth += healthRecovery * Time.deltaTime;
                 if (currentHealth >= maxHealth)
                 {
                     currentHealth = maxHealth;
