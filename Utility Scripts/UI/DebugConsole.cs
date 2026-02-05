@@ -22,6 +22,13 @@ namespace DiamondMind.Prototypes.Tools
             Application.logMessageReceived -= HandleLog;
         }
 
+        private void HandleLogg(string logString, string stackTrace, LogType type)
+        {
+            logQueue.Enqueue(logString);
+            if (logQueue.Count > 28) logQueue.Dequeue(); // Limit logs on screen
+            logText.text = string.Join("\n", logQueue.ToArray());
+        }
+
         private void HandleLog(string logString, string stackTrace, LogType logType)
         {
             string timeStamp = DateTime.Now.ToString("HH:mm:ss.fff");
