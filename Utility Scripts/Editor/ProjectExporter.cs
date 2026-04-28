@@ -37,7 +37,7 @@ namespace DiamondMind.Prototypes.Tools
         /// Adds a menu item in the Unity Editor.
         /// Opens the Project Exporter window and initializes the asset trees.
         /// </summary>
-        [MenuItem("Export/Export Custom Package")]
+        [MenuItem("DiamondMind/Tools/Export Custom Package")]
         public static void ShowWindow()
         {
             ProjectExporter window = GetWindow<ProjectExporter>("Export Package");
